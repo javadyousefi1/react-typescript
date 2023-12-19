@@ -47,3 +47,6 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 ## the commend of install react with typescript
 npx create-react-app react-with-typescript --template typescript
+
+## color palet
+https://colorhunt.co/palette/352f445c5470b9b4c7faf0e6
