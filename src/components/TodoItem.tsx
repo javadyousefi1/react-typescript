@@ -1,10 +1,12 @@
 export type NewTodo = {
   id: number;
   title: string;
+  isComplete: boolean;
   onDelete: (id: number) => void;
+  onComplete: (id: number) => void;
 };
 
-const TodoItem = ({ title, id, onDelete }: NewTodo) => {
+const TodoItem = ({ title, id, onDelete, onComplete, isComplete }: NewTodo) => {
   const todoSvgIcon = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -24,11 +26,15 @@ const TodoItem = ({ title, id, onDelete }: NewTodo) => {
   );
 
   return (
-    <div className="p-5 bg-secondary w-[calc(100%-10px)] rounded-lg flex justify-between bg-opacity-70  ">
+    <div
+      className={`p-5 bg-secondary w-[calc(100%-10px)] rounded-lg flex justify-between bg-opacity-70 transition-all ease-linear duration-150 ${
+        isComplete && "bg-opacity-35"
+      }`}
+    >
       <div className="text-main_white flex gap-x-2">
         {todoSvgIcon}
 
-        <span title={title}>
+        <span title={title} className={`${isComplete && "line-through"}`}>
           {title.length > 20 ? title.slice(0, 5) + "..." : title}
         </span>
       </div>
@@ -55,29 +61,51 @@ const TodoItem = ({ title, id, onDelete }: NewTodo) => {
             ></path>
           </svg>
         </button>
-        <button>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="23"
-            height="23"
-            viewBox="0 0 24 24"
-            fill="none"
-          >
-            <path
-              d="M9 22h6c5 0 7-2 7-7V9c0-5-2-7-7-7H9C4 2 2 4 2 9v6c0 5 2 7 7 7Z"
-              stroke="#FAF0E6"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            ></path>
-            <path
-              d="m7.75 12 2.83 2.83 5.67-5.66"
-              stroke="#FAF0E6"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            ></path>
-          </svg>
+        <button
+          onClick={() => {
+            onComplete(id);
+          }}
+        >
+          {isComplete ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="23"
+              height="23"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="m9.17 14.83 5.66-5.66M14.83 14.83 9.17 9.17M9 22h6c5 0 7-2 7-7V9c0-5-2-7-7-7H9C4 2 2 4 2 9v6c0 5 2 7 7 7Z"
+                stroke="#FAF0E6"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+            </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="23"
+              height="23"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M9 22h6c5 0 7-2 7-7V9c0-5-2-7-7-7H9C4 2 2 4 2 9v6c0 5 2 7 7 7Z"
+                stroke="#FAF0E6"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              ></path>
+              <path
+                d="m7.75 12 2.83 2.83 5.67-5.66"
+                stroke="#FAF0E6"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              ></path>
+            </svg>
+          )}
         </button>
       </div>
     </div>

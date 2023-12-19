@@ -23,7 +23,7 @@ const AddTodoForm = ({ onAdd }: AddTodoFormProps) => {
       return;
     }
     // set new todo
-    onAdd({ title: newTodoValue, id: new Date().getTime() });
+    onAdd({ title: newTodoValue, id: new Date().getTime(), isComplete: false });
     // reset form
     e.currentTarget.reset();
     // show succ toast

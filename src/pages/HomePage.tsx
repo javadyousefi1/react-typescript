@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TodoItem from "../components/TodoItem";
 import Header from "../components/Header";
 import AddTodoForm from "../components/AddTodoForm";
@@ -6,6 +6,7 @@ import AddTodoForm from "../components/AddTodoForm";
 export type NewTodo = {
   id: number;
   title: string;
+  isComplete: boolean;
 };
 
 const HomePage = () => {
@@ -15,9 +16,18 @@ const HomePage = () => {
     setTodos((prevTodos) => [...prevTodos, newTodo]);
   };
 
-  const handleDeleteTodoById = (id: number): void => {
+  const handleDeleteTodo = (id: number): void => {
     // filter todos by id
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+  };
+
+  const handleToggleIsCompleted = (id: number): void => {
+    // toggle the is completed status by id
+    setTodos((prevTodos) =>
+      prevTodos.map((obj) =>
+        obj.id === id ? { ...obj, isComplete: !obj.isComplete } : obj
+      )
+    );
   };
 
   return (
@@ -33,13 +43,19 @@ const HomePage = () => {
           <AddTodoForm onAdd={handleSetNewTodo} />
           {/* todo list */}
           <div className=" max-h-[320px] overflow-y-auto flex flex-col gap-y-3">
-            {todos.length === 0 && <p className="text-center text-primary text-xs my-4">You did not add new todo yet</p>}
+            {todos.length === 0 && (
+              <p className="text-center text-primary text-xs my-4">
+                You did not add new todo yet
+              </p>
+            )}
             {todos.map((todo) => (
               <TodoItem
                 key={todo.id}
-                title={todo.title}
                 id={todo.id}
-                onDelete={handleDeleteTodoById}
+                title={todo.title}
+                isComplete={todo.isComplete}
+                onDelete={handleDeleteTodo}
+                onComplete={handleToggleIsCompleted}
               />
             ))}
           </div>
