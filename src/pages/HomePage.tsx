@@ -1,6 +1,7 @@
 import { type FormEvent, useState, useRef } from "react";
 import toast from "react-hot-toast";
 import TodoItem from "../components/TodoItem";
+import Header from "../components/Header";
 
 const HomePage = () => {
   type NewTodo = {
@@ -9,6 +10,7 @@ const HomePage = () => {
   };
 
   const [todos, setTodos] = useState<NewTodo[]>([]);
+
   const inputValue = useRef<HTMLInputElement>(null);
 
   const onSubmit = (e: FormEvent<HTMLFormElement>): void => {
@@ -17,7 +19,12 @@ const HomePage = () => {
 
     const newTodoValue = inputValue.current!.value;
     // prevent add empty todo
-    if (newTodoValue === "") return;
+    if (newTodoValue.trim() === "") {
+      // reset form
+      e.currentTarget.reset();
+      // prevent excute other expressions
+      return;
+    }
     // set new todo
     setTodos((prevTodo) => [
       ...prevTodo,
@@ -34,15 +41,12 @@ const HomePage = () => {
       <div className="w-full h-screen bg-primary flex justify-center items-center px-3 md:px-0">
         <div className="w-[500px] bg-light_primary px-5 py-7 rounded-lg">
           {/* header */}
-          <div>
-            <h1 className="text-primary text-2xl text-center font-bold">
-              Add Todo
-            </h1>
-            <h3 className="text-secondary text-md text-center font-bold">
-              created by React + Typescript
-            </h3>
-          </div>
+          <Header
+            title="Todo App"
+            description="created by using React + Typescript"
+          />
           {/* add todo form */}
+          
           <form onSubmit={onSubmit}>
             <div className="flex gap-x-3 mt-10">
               <input

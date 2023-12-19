@@ -1,26 +1,32 @@
-type TodoItemObj = { title: string };
+type TodoItemProps = { title: string };
 
-const TodoItem = ({ title }: TodoItemObj) => {
+const TodoItem = ({ title }: TodoItemProps) => {
+  const todoSvgIcon = (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="23"
+      height="23"
+      viewBox="0 0 24 24"
+      fill="none"
+    >
+      <path
+        d="M9 22h6c5 0 7-2 7-7V9c0-5-2-7-7-7H9C4 2 2 4 2 9v6c0 5 2 7 7 7ZM17.5 17.08h-1.85M12.97 17.08H6.5M17.5 13.32h-5.53M9.27 13.32H6.5"
+        stroke="#352F44"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></path>
+    </svg>
+  );
+
   return (
     <div className="p-5 bg-secondary w-[calc(100%-10px)] rounded-lg flex justify-between bg-opacity-70 mb-4 ">
       <div className="text-main_white flex gap-x-2">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="23"
-          height="23"
-          viewBox="0 0 24 24"
-          fill="none"
-        >
-          <path
-            d="M9 22h6c5 0 7-2 7-7V9c0-5-2-7-7-7H9C4 2 2 4 2 9v6c0 5 2 7 7 7ZM17.5 17.08h-1.85M12.97 17.08H6.5M17.5 13.32h-5.53M9.27 13.32H6.5"
-            stroke="#352F44"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          ></path>
-        </svg>
+        {todoSvgIcon}
 
-        <span>{title}</span>
+        <span title={title}>
+          {title.length > 20 ? title.slice(0, 5) + "..." : title}
+        </span>
       </div>
       {/* icons */}
       <div className="flex gap-x-3">
