@@ -12,22 +12,42 @@ export type NewTodo = {
 const HomePage = () => {
   const [todos, setTodos] = useState<NewTodo[]>([]);
 
+  useEffect(() => {
+    const todosFromLocalStorage = localStorage.getItem("todos")
+      ? JSON.parse(localStorage.getItem("todos")!)
+      : [];
+
+    console.log(todosFromLocalStorage);
+
+    setTodos(todosFromLocalStorage);
+  }, []);
+
+  const handleSaveLocalStorage = (newData: NewTodo[]) => {
+    localStorage.setItem("todos", JSON.stringify(newData));
+  };
+
   const handleSetNewTodo = (newTodo: NewTodo): void => {
-    setTodos((prevTodos) => [...prevTodos, newTodo]);
+    const todo = [...todos, newTodo];
+
+    setTodos(todo);
+    handleSaveLocalStorage(todo);
   };
 
   const handleDeleteTodo = (id: number): void => {
+    const filteredTodo = todos.filter((todo) => todo.id !== id);
     // filter todos by id
-    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+    setTodos(filteredTodo);
+    handleSaveLocalStorage(filteredTodo);
   };
 
   const handleToggleIsCompleted = (id: number): void => {
-    // toggle the is completed status by id
-    setTodos((prevTodos) =>
-      prevTodos.map((obj) =>
-        obj.id === id ? { ...obj, isComplete: !obj.isComplete } : obj
-      )
+    const toggleTodo = todos.map((obj) =>
+      obj.id === id ? { ...obj, isComplete: !obj.isComplete } : obj
     );
+
+    // toggle the is completed status by id
+    setTodos(toggleTodo);
+    handleSaveLocalStorage(toggleTodo);
   };
 
   return (
