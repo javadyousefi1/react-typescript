@@ -1,16 +1,17 @@
 import { type FormEvent, useState, useRef } from "react";
 import toast from "react-hot-toast";
+import TodoItem from "../components/TodoItem";
 
 const HomePage = () => {
   type NewTodo = {
+    id: number;
     title: string;
   };
 
   const [todos, setTodos] = useState<NewTodo[]>([]);
-  console.log(todos);
   const inputValue = useRef<HTMLInputElement>(null);
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = (e: FormEvent<HTMLFormElement>): void => {
     // prevent refresh page
     e.preventDefault();
 
@@ -18,7 +19,10 @@ const HomePage = () => {
     // prevent add empty todo
     if (newTodoValue === "") return;
     // set new todo
-    setTodos((prevTodo) => [...prevTodo, { title: newTodoValue }]);
+    setTodos((prevTodo) => [
+      ...prevTodo,
+      { title: newTodoValue, id: new Date().getTime() },
+    ]);
     // reset form
     e.currentTarget.reset();
     // show succ toast
@@ -27,7 +31,7 @@ const HomePage = () => {
 
   return (
     <>
-      <div className="w-full h-screen bg-primary flex justify-center items-center">
+      <div className="w-full h-screen bg-primary flex justify-center items-center px-3 md:px-0">
         <div className="w-[500px] bg-light_primary px-5 py-7 rounded-lg">
           {/* header */}
           <div>
@@ -38,7 +42,7 @@ const HomePage = () => {
               created by React + Typescript
             </h3>
           </div>
-
+          {/* add todo form */}
           <form onSubmit={onSubmit}>
             <div className="flex gap-x-3 mt-10">
               <input
@@ -52,6 +56,13 @@ const HomePage = () => {
               </button>
             </div>
           </form>
+
+          {/* todo list */}
+          <div className="mt-10 max-h-[320px] overflow-y-auto">
+            {todos.map((todo) => (
+              <TodoItem key={todo.id} title={todo.title} />
+            ))}
+          </div>
         </div>
       </div>
     </>
