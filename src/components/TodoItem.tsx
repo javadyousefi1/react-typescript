@@ -1,6 +1,10 @@
-type TodoItemProps = { title: string };
+export type NewTodo = {
+  id: number;
+  title: string;
+  onDelete: (id: number) => void;
+};
 
-const TodoItem = ({ title }: TodoItemProps) => {
+const TodoItem = ({ title, id, onDelete }: NewTodo) => {
   const todoSvgIcon = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -20,7 +24,7 @@ const TodoItem = ({ title }: TodoItemProps) => {
   );
 
   return (
-    <div className="p-5 bg-secondary w-[calc(100%-10px)] rounded-lg flex justify-between bg-opacity-70 mb-4 ">
+    <div className="p-5 bg-secondary w-[calc(100%-10px)] rounded-lg flex justify-between bg-opacity-70  ">
       <div className="text-main_white flex gap-x-2">
         {todoSvgIcon}
 
@@ -30,7 +34,11 @@ const TodoItem = ({ title }: TodoItemProps) => {
       </div>
       {/* icons */}
       <div className="flex gap-x-3">
-        <button>
+        <button
+          onClick={() => {
+            onDelete(id);
+          }}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="23"
