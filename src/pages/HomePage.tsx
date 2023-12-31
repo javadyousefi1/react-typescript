@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import TodoItem from "../components/TodoItem";
 import Header from "../components/Header";
 import AddTodoForm from "../components/AddTodoForm";
+import InfoBox from "../components/InfoBox";
 
 export type NewTodo = {
   id: number;
@@ -50,9 +51,19 @@ const HomePage = () => {
     handleSaveLocalStorage(toggleTodo);
   };
 
+  let warning: ReactNode;
+
+  if (todos.length >= 4) {
+    warning = (
+      <InfoBox mode="warn">
+        you added very todos , do not add multiplie tasks
+      </InfoBox>
+    );
+  }
+
   return (
     <>
-      <div className="w-full h-screen bg-primary flex justify-center items-center px-3 md:px-0">
+      <div className="flex items-center justify-center w-full h-screen px-3 bg-primary md:px-0">
         <div className="w-[500px] bg-light_primary px-5 py-7 rounded-lg flex flex-col gap-y-6">
           {/* header */}
           <Header
@@ -63,11 +74,7 @@ const HomePage = () => {
           <AddTodoForm onAdd={handleSetNewTodo} />
           {/* todo list */}
           <div className=" max-h-[320px] overflow-y-auto flex flex-col gap-y-3">
-            {todos.length === 0 && (
-              <p className="text-center text-primary text-xs my-4">
-                You did not add new todo yet
-              </p>
-            )}
+            {warning }
             {todos.map((todo) => (
               <TodoItem
                 key={todo.id}
