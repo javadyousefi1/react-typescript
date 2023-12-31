@@ -55,7 +55,7 @@ const HomePage = () => {
 
   if (todos.length >= 4) {
     warning = (
-      <InfoBox mode="warn">
+      <InfoBox mode="warn" title="title">
         you added very todos , do not add multiplie tasks
       </InfoBox>
     );
@@ -74,7 +74,7 @@ const HomePage = () => {
           <AddTodoForm onAdd={handleSetNewTodo} />
           {/* todo list */}
           <div className=" max-h-[320px] overflow-y-auto flex flex-col gap-y-3">
-            {warning }
+            {warning}
             {todos.map((todo) => (
               <TodoItem
                 key={todo.id}
