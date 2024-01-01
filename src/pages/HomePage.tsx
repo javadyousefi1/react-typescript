@@ -60,6 +60,9 @@ const HomePage = () => {
       </InfoBox>
     );
   }
+  if (todos.length === 0) {
+    warning = <InfoBox mode="hint">Add some todos...</InfoBox>;
+  }
 
   return (
     <>

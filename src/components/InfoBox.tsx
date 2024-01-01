@@ -1,16 +1,27 @@
 import { type ReactNode } from "react";
 
-type InfoBoxProps = {
-  mode: "warn" | "hint";
+type warning = {
+  mode: "warn";
   children: ReactNode;
-  title?: string;
+  title: string;
+};
+type hint = {
+  mode: "hint";
+  children: ReactNode;
 };
 
-const InfoBox = ({ mode, children, title = "warning" }: InfoBoxProps) => {
+// relate props to other props
+type InfoBoxProps = warning | hint;
+
+const InfoBox = (props: InfoBoxProps) => {
+  const { children, mode } = props;
+
   if (mode === "warn") {
+    const { title } = props;
+
     return (
       <>
-        <aside className="flex flex-col w-[calc(100%-10px)] items-center justify-center p-2 text-yellow-300 border border-yellow-300 rounded-md gap-y-2">
+        <aside className="flex flex-col w-[calc(100%-10px)] items-center justify-center p-2 text-red-500 border border-red-500 rounded-md gap-y-2">
           <h1 className="text-xl">{title}</h1>
           <p>{children}</p>
         </aside>
@@ -21,7 +32,7 @@ const InfoBox = ({ mode, children, title = "warning" }: InfoBoxProps) => {
   return (
     <>
       <aside className="flex flex-col items-center justify-center p-2 text-yellow-300 border border-yellow-300 rounded-md gap-y-2">
-        <h1 className="text-xl">warning</h1>
+        <h1 className="text-xl">hint</h1>
         <p>{children}</p>
       </aside>
     </>
