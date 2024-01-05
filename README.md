@@ -49,4 +49,4 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 npx create-react-app react-with-typescript --template typescript
 
 ## color palet
-https://colorhunt.co/palette/352f445c5470b9b4c7faf0e6
+https://colorhunt.co/palette/163020304d30b6c4b6eef0e5
